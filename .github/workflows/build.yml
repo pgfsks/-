@@ -1,0 +1,38 @@
+name: Build QuickKey IPA
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Install ldid
+        run: brew install ldid
+
+      - name: Setup Theos
+        run: |
+          export THEOS=$HOME/theos
+          git clone https://github.com/theos/theos.git $THEOS
+          git clone --depth 1 https://github.com/theos/sdks.git $THEOS/sdks
+
+      - name: Fix script line ending
+        run: sed -i '' 's/\r$//' ./制作文件
+
+      - name: Compile & Package IPA
+        run: |
+          export THEOS=$HOME/theos
+          set -o pipefail
+          make clean all
+          chmod +x ./制作文件
+          ./制作文件
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: QuickKey-IPA
+          path: build/*.ipa
