@@ -1,0 +1,9 @@
+Package: com.quickkey
+Name: QuickKey
+Version: 1.0
+Architecture: iphoneos-arm64
+Description: 硬件按键（音量±/电源/静音拨片）自定义手势，触发运行快捷指令
+Maintainer: QuickKey
+Author: QuickKey
+Section: Tweaks
+Depends: firmware (>= 15.0)
